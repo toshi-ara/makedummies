@@ -6,7 +6,7 @@
 A package for creating dummy variables from factor.
 }
 \usage{
-makedummies(dat, basal_level = FALSE, sep = "_")
+makedummies(dat, basal_level = FALSE, col = NULL)
 }
 \arguments{
   \item{dat}{
@@ -17,8 +17,8 @@ makedummies(dat, basal_level = FALSE, sep = "_")
 
     \code{FALSE} (default): exclude a dummy variable for basal level
   }
-  \item{sep}{
-    Characters between variable and each level
+  \item{col}{
+    Columns vector (all columns are used if NULL is given)
   }
 }
 \value{
@@ -38,7 +38,6 @@ makedummies(dat)
 
 ## numeric
 dat <- data.frame(x = rep(1:3, each = 3))
-dat$x
 makedummies(dat)
 
 ## factor and numeric
@@ -54,6 +53,14 @@ dat <- data.frame(
     y = factor(rep(1:3, each = 3))
 )
 makedummies(dat)
+}
+
+## "col" option
+dat <- data.frame(
+    x = factor(rep(c("a", "b", "c"), each = 3)),
+    y = factor(rep(1:3, each = 3))
+)
+makedummies(dat, col = "x")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

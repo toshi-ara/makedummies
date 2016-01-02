@@ -1,12 +1,15 @@
-makedummies <- function(dat, basal_level = FALSE, sep = "_") {
-    n_col <- ncol(dat)
-    name_col <- colnames(dat)
+makedummies <- function(dat, basal_level = FALSE, col = NULL) {
+    if (is.null(col)) {
+        name_col <- colnames(dat)
+    } else {
+        name_col <- unique(col)
+    }
     name_row <- rownames(dat)
 
     result <- NULL
-    for (i in seq(n_col)) {
+    for (name in name_col) {
         ## process each column
-        tmp <- dat[,name_col[i]]
+        tmp <- dat[,name]
         if (is.factor(tmp)) {
             ## factor or ordered => convert dummy variables
             level <- levels(droplevels(tmp))
@@ -14,14 +17,14 @@ makedummies <- function(dat, basal_level = FALSE, sep = "_") {
             n <- length(level)
             res <- matrix(0, m, n)
             res[cbind(seq(m), tmp)] <- 1
-            colnames(res) <- paste(name_col[i], level, sep = sep)
+            colnames(res) <- paste(name, level, sep = "_")
             if (basal_level == FALSE) {
                 res <- res[,-1]
             }
         } else {
             ## non-factor or non-ordered => as-is
             res <- as.matrix(tmp)
-            colnames(res) <- name_col[i]
+            colnames(res) <- name
         }
         result <- cbind(result, res)
     }
