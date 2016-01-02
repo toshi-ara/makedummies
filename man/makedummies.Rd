@@ -6,7 +6,7 @@
 A package for creating dummy variables from factor.
 }
 \usage{
-makedummies(dat, basal_level = FALSE, col = NULL)
+makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL)
 }
 \arguments{
   \item{dat}{
@@ -19,6 +19,9 @@ makedummies(dat, basal_level = FALSE, col = NULL)
   }
   \item{col}{
     Columns vector (all columns are used if NULL is given)
+  }
+  \item{numerical}{
+    Columns vector converting from factor/ordered to numeric (ignore if column is numeric)
   }
 }
 \value{
@@ -53,7 +56,6 @@ dat <- data.frame(
     y = factor(rep(1:3, each = 3))
 )
 makedummies(dat)
-}
 
 ## "col" option
 dat <- data.frame(
@@ -61,6 +63,22 @@ dat <- data.frame(
     y = factor(rep(1:3, each = 3))
 )
 makedummies(dat, col = "x")
+
+## "numerical" option
+dat <- data.frame(
+    x = factor(rep(c("a", "b", "c"), each = 3)),
+    y = factor(rep(1:3, each = 3))
+)
+makedummies(dat, numeric = "x")
+
+dat <- data.frame(
+    x = factor(rep(c("a", "b", "c"), each = 3)),
+    y = rep(4:6, each = 3)
+)
+dat$x <- ordered(dat$x, levels = c("a" ,"c" ,"b"))
+dat
+dat$x
+makedummies(dat, numeric = c("x", "y"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
