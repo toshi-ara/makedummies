@@ -11,12 +11,13 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL) 
         ## process each column
         tmp <- dat[,name]
         if (is.factor(tmp)) {
+            ## factor or ordered
             if (name %in% numerical) {
-                ## factor or ordered => convert numeric
+                ## convert numeric by numerical option
                 res <- as.matrix(as.numeric(tmp))
                 colnames(res) <- name
             } else {
-                ## factor or ordered => convert dummy variables
+                ## convert dummy variables
                 level <- levels(droplevels(tmp))
                 m <- length(tmp)
                 n <- length(level)
