@@ -170,7 +170,7 @@ dat <- data.frame(
     x = factor(rep(c("a", "b", "c"), each = 3)),
     y = factor(rep(1:3, each = 3))
 )
-makedummies(dat, numeric = "x")
+makedummies(dat, numerical = "x")
 #+END_SRC
 
 #+BEGIN_EXAMPLE
@@ -194,7 +194,7 @@ dat <- data.frame(
 dat$x <- ordered(dat$x, levels = c("a" ,"c" ,"b"))
 dat
 dat$x
-makedummies(dat, numeric = c("x", "y"))
+makedummies(dat, numerical = c("x", "y"))
 #+END_SRC
 
 #+BEGIN_EXAMPLE
