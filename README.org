@@ -18,131 +18,131 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL
 * Examples
 ** Simple usages
 *** factor
- #+BEGIN_SRC R 
- dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
- dat$x
- makedummies(dat)
- #+END_SRC
+#+BEGIN_SRC R 
+dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
+dat$x
+makedummies(dat)
+#+END_SRC
 
- #+BEGIN_EXAMPLE
- [1] a a a b b b c c c
- Levels: a b c
+#+BEGIN_EXAMPLE
+[1] a a a b b b c c c
+Levels: a b c
 
-   x_b x_c
- 1   0   0
- 2   0   0
- 3   0   0
- 4   1   0
- 5   1   0
- 6   1   0
- 7   0   1
- 8   0   1
- 9   0   1
- #+END_EXAMPLE
+  x_b x_c
+1   0   0
+2   0   0
+3   0   0
+4   1   0
+5   1   0
+6   1   0
+7   0   1
+8   0   1
+9   0   1
+#+END_EXAMPLE
 
- #+BEGIN_SRC R 
- makedummies(dat, basal_level = TRUE)
- #+END_SRC
+#+BEGIN_SRC R 
+makedummies(dat, basal_level = TRUE)
+#+END_SRC
 
- #+BEGIN_EXAMPLE
-   x_a x_b x_c
- 1   1   0   0
- 2   1   0   0
- 3   1   0   0
- 4   0   1   0
- 5   0   1   0
- 6   0   1   0
- 7   0   0   1
- 8   0   0   1
- 9   0   0   1
- #+END_EXAMPLE
+#+BEGIN_EXAMPLE
+  x_a x_b x_c
+1   1   0   0
+2   1   0   0
+3   1   0   0
+4   0   1   0
+5   0   1   0
+6   0   1   0
+7   0   0   1
+8   0   0   1
+9   0   0   1
+#+END_EXAMPLE
 
 *** ordered
- #+BEGIN_SRC R 
- dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
- dat$x <- ordered(dat$x, levels = c("a" ,"c" ,"b"))
- dat$x
- makedummies(dat)
- #+END_SRC
+#+BEGIN_SRC R 
+dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
+dat$x <- ordered(dat$x, levels = c("a" ,"c" ,"b"))
+dat$x
+makedummies(dat)
+#+END_SRC
 
- #+BEGIN_EXAMPLE
- [1] a a a b b b c c c
- Levels: a < c < b
+#+BEGIN_EXAMPLE
+[1] a a a b b b c c c
+Levels: a < c < b
 
-   x_c x_b
- 1   0   0
- 2   0   0
- 3   0   0
- 4   0   1
- 5   0   1
- 6   0   1
- 7   1   0
- 8   1   0
- 9   1   0
- #+END_EXAMPLE
+  x_c x_b
+1   0   0
+2   0   0
+3   0   0
+4   0   1
+5   0   1
+6   0   1
+7   1   0
+8   1   0
+9   1   0
+#+END_EXAMPLE
 
 *** numeric
- #+BEGIN_SRC R 
- dat <- data.frame(x = rep(1:3, each = 3))
- makedummies(dat)
- #+END_SRC
+#+BEGIN_SRC R 
+dat <- data.frame(x = rep(1:3, each = 3))
+makedummies(dat)
+#+END_SRC
 
- #+BEGIN_EXAMPLE
-   x
- 1 1
- 2 1
- 3 1
- 4 2
- 5 2
- 6 2
- 7 3
- 8 3
- 9 3
- #+END_EXAMPLE
+#+BEGIN_EXAMPLE
+  x
+1 1
+2 1
+3 1
+4 2
+5 2
+6 2
+7 3
+8 3
+9 3
+#+END_EXAMPLE
 
 *** factor and numeric
- #+BEGIN_SRC R 
- dat <- data.frame(
-     x = factor(rep(c("a", "b", "c"), each = 3)),
-     y = rep(1:3, each = 3)
- )
- makedummies(dat)
- #+END_SRC
+#+BEGIN_SRC R 
+dat <- data.frame(
+    x = factor(rep(c("a", "b", "c"), each = 3)),
+    y = rep(1:3, each = 3)
+)
+makedummies(dat)
+#+END_SRC
 
- #+BEGIN_EXAMPLE
-   x_b x_c y
- 1   0   0 1
- 2   0   0 1
- 3   0   0 1
- 4   1   0 2
- 5   1   0 2
- 6   1   0 2
- 7   0   1 3
- 8   0   1 3
- 9   0   1 3
- #+END_EXAMPLE
+#+BEGIN_EXAMPLE
+  x_b x_c y
+1   0   0 1
+2   0   0 1
+3   0   0 1
+4   1   0 2
+5   1   0 2
+6   1   0 2
+7   0   1 3
+8   0   1 3
+9   0   1 3
+#+END_EXAMPLE
 
 *** factors
- #+BEGIN_SRC R 
- dat <- data.frame(
-     x = factor(rep(c("a", "b", "c"), each = 3)),
-     y = factor(rep(1:3, each = 3))
- )
- makedummies(dat)
- #+END_SRC
+#+BEGIN_SRC R 
+dat <- data.frame(
+    x = factor(rep(c("a", "b", "c"), each = 3)),
+    y = factor(rep(1:3, each = 3))
+)
+makedummies(dat)
+#+END_SRC
 
- #+BEGIN_EXAMPLE
-   x_b x_c y_2 y_3
- 1   0   0   0   0
- 2   0   0   0   0
- 3   0   0   0   0
- 4   1   0   1   0
- 5   1   0   1   0
- 6   1   0   1   0
- 7   0   1   0   1
- 8   0   1   0   1
- 9   0   1   0   1
- #+END_EXAMPLE
+#+BEGIN_EXAMPLE
+  x_b x_c y_2 y_3
+1   0   0   0   0
+2   0   0   0   0
+3   0   0   0   0
+4   1   0   1   0
+5   1   0   1   0
+6   1   0   1   0
+7   0   1   0   1
+8   0   1   0   1
+9   0   1   0   1
+#+END_EXAMPLE
 
 ** Options
 *** "col" option
