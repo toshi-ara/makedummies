@@ -1,8 +1,8 @@
 Package: makedummies
 Type: Package
 Title: Creatie dummy variables from factor
-Version: 0.0.3
-Date: 2016-01-02
+Version: 0.0.4
+Date: 2016-12-31
 Author: Toshiaki Ara <toshiaki.ara@gmail.com>
 Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
 Description: A package for creating dummy variables from factor.

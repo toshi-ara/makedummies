@@ -1,4 +1,4 @@
-makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL) {
+makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL) {
     if (is.null(col)) {
         name_col <- colnames(dat)
     } else {
@@ -10,7 +10,11 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL) 
     for (name in name_col) {
         ## process each column
         tmp <- dat[,name]
-        if (is.factor(tmp)) {
+        if (name %in% as.is) {
+            ## as.is option
+            res <- as.matrix(tmp)
+            colnames(res) <- name
+        } else if (is.factor(tmp)) {
             ## factor or ordered
             if (name %in% numerical) {
                 ## convert numeric by numerical option
