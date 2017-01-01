@@ -3,11 +3,13 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{makedummies}
 \description{
-A package for creating dummy variables from factor.
+Create dummy variables from factor.
+Distinct from using model.matrix(),
+this package can handle multiple columns simultaneously,
+and include or not a dummy variable of basal category by an option.
 }
 \usage{
-makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL,
-as.is = NULL)
+makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL)
 }
 \arguments{
   \item{dat}{
