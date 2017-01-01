@@ -1,4 +1,5 @@
 makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL) {
+    ## names of column and row
     if (is.null(col)) {
         name_col <- colnames(dat)
     } else {
@@ -7,34 +8,29 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
     name_row <- rownames(dat)
 
     result <- NULL
+    ## process each column
     for (name in name_col) {
-        ## process each column
         tmp <- dat[,name]
-        if (name %in% as.is) {
-            ## as.is option
+        if (name %in% as.is) { ## as.is option
             res <- as.matrix(tmp)
             colnames(res) <- name
-        } else if (is.factor(tmp)) {
-            ## factor or ordered
-            if (name %in% numerical) {
-                ## convert numeric by numerical option
+        } else if (is.factor(tmp)) { ## factor or ordered
+            if (name %in% numerical) { ## numerical option => convert numeric
                 res <- as.matrix(as.numeric(tmp))
                 colnames(res) <- name
-            } else {
-                ## convert dummy variables
+            } else { ## convert dummy variables
                 level <- levels(droplevels(tmp))
                 m <- length(tmp)
                 n <- length(level)
                 res <- matrix(0, m, n)
                 res[cbind(seq(m), tmp)] <- 1
                 colnames(res) <- paste(name, level, sep = "_")
-                ## delete basal level
+                ## basal_level option => delete basal level
                 if (basal_level == FALSE) {
                     res <- res[,-1]
                 }
             }
-        } else {
-            ## non-factor and non-ordered => as-is
+        } else { ## non-factor and non-ordered => as-is
             res <- as.matrix(tmp)
             colnames(res) <- name
         }
