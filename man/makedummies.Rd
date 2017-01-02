@@ -3,10 +3,12 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{makedummies}
 \description{
-Create dummy variables from factor.
-Distinct from using model.matrix(),
-this package can handle multiple columns simultaneously,
-and include or not a dummy variable of basal category by an option.
+Create dummy variables from categorical data.
+This package can convert categorical data (factor and ordered) into
+dummy variables and handle multiple columns simultaneously.
+This package enables to select whether a dummy variable for base group
+is included (for principal component analysis/factor analysis) or
+excluded (for regression analysis) by an option.
 }
 \usage{
 makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL)
@@ -16,9 +18,9 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL
     data.frame
   }
   \item{basal_level}{
-    \code{TRUE}: include a dummy variable for basal level
+    \code{TRUE}: include a dummy variable for base group
 
-    \code{FALSE} (default): exclude a dummy variable for basal level
+    \code{FALSE} (default): exclude a dummy variable for base group
   }
   \item{col}{
     Columns vector (all columns are used if NULL is given)
@@ -27,7 +29,7 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL
     Columns vector converting from factor/ordered to numeric (ignore if column is numeric)
   }
   \item{as.is}{
-    Columns vector not converting (all columns are used if NULL is given)
+    Columns vector not converting
   }
 }
 \value{

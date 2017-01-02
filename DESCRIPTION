@@ -1,14 +1,16 @@
 Package: makedummies
 Type: Package
-Title: Create Dummy Variables from Factor
+Title: Create Dummy Variables from Categorical Data
 Version: 1.0
-Date: 2017-01-01
+Date: 2017-01-02
 Author: Toshiaki Ara
 Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
-Description: Create dummy variables from factor.
-  Distinct from using model.matrix(),
-  this package can handle multiple columns simultaneously,
-  and include or not a dummy variable of basal category by an option.
+Description: Create dummy variables from categorical data.
+    This package can convert categorical data (factor and ordered) into
+    dummy variables and handle multiple columns simultaneously.
+    This package enables to select whether a dummy variable for base group
+    is included (for principal component analysis/factor analysis) or
+    excluded (for regression analysis) by an option.
 License: GPL-2
 URL: https://github.com/toshi-ara/makedummies
 BugReports: https://github.com/toshi-ara/makedummies/issues/

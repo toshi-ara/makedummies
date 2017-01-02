@@ -12,8 +12,8 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL
 
 -   dat: data.frame
 -   basal_level
-    -   TRUE: include a dummy variable for basal level
-    -   FALSE (default): exclude a dummy variable for basal level
+    -   TRUE: include a dummy variable for base group
+    -   FALSE (default): exclude a dummy variable for base group
 -   col: Columns vector (all columns are used if NULL is given)
 -   numerical: Columns vector converting from factor/ordered to numeric
     (ignore if column is numeric)
