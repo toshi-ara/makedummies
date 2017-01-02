@@ -17,8 +17,7 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL
 -   col: Columns vector (all columns are used if NULL is given)
 -   numerical: Columns vector converting from factor/ordered to numeric
     (ignore if column is numeric)
--   as.is: Columns vector not converting (all columns are used if NULL
-    is given)
+-   as.is: Columns vector not converting
 -   sep: obsoluted
 
 Examples
