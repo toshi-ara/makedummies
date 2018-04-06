@@ -7,16 +7,18 @@
 #' is included (for principal component analysis/factor analysis) or
 #' excluded (for regression analysis) by an option.
 
-#' @param dat data.frame
+#' @param dat \code{data.frame}
 #' @param basal_level
 #'   \describe{
-#'    \item{TRUE}{include a dummy variable for base group}
-#'    \item{FALSE}{(default) exclude a dummy variable for base group}
+#'    \item{TRUE}{: include a dummy variable for base group}
+#'    \item{FALSE}{(default) : exclude a dummy variable for base group}
 #'   }
-#' @param col Columns vector (all columns are used if NULL is given)
-#' @param numerical Columns vector converting from factor/ordered to numeric (ignore if column is numeric)
+#' @param col Columns vector (all columns are used if \code{NULL} is given)
+#' @param numerical Columns vector converting from \code{factor/ordered} to \code{numeric} (ignore if column is \code{numeric})
 #' @param as.is Columns vector not converting
-#' @return return as data.frame
+#' @return return as \code{data.frame}
+#'
+#' @note  \code{tbl} class is also accepted from version 1.1 (returned as \code{data.frame).
 #'
 #' @export
 
@@ -82,10 +84,10 @@
 #' makedummies(dat, as.is = "x")
 #' makedummies(dat, as.is = c("x", "y"))
 
-#' @keywords function
-
-
 makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL) {
+    ## convert tbl data to data.frame
+    if (inherits(dat, "tbl")) dat <- data.frame(dat)
+
     ## names of column and row
     if (is.null(col)) {
         name_col <- colnames(dat)
@@ -94,12 +96,12 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
     }
     name_row <- rownames(dat)
 
-    result <- NULL
     ## process each column
-    for (name in name_col) {
+    for (i in seq(length(name_col))) {
+        name <- name_col[i]
         tmp <- dat[,name]
         if (name %in% as.is) { ## as.is option
-            res <- as.matrix(tmp)
+            res <- data.frame(tmp)
             colnames(res) <- name
         } else if (is.factor(tmp)) { ## factor or ordered
             if (name %in% numerical) { ## numerical option => convert numeric
@@ -116,13 +118,18 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
                 if (basal_level == FALSE) {
                     res <- res[,-1]
                 }
+                res <- data.frame(res)
             }
         } else { ## non-factor and non-ordered => as-is
-            res <- as.matrix(tmp)
+            res <- data.frame(tmp)
             colnames(res) <- name
         }
-        result <- cbind(result, res)
+        if (i == 1) {
+            result <- data.frame(res)
+        } else {
+            result <- data.frame(result, res)
+        }
     }
-    rownames(result) <- name_row
-    return(data.frame(result))
+    return(result)
 }
+

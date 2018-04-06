@@ -8,21 +8,21 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL,
   as.is = NULL)
 }
 \arguments{
-\item{dat}{data.frame}
+\item{dat}{\code{data.frame}}
 
 \item{basal_level}{\describe{
- \item{TRUE}{include a dummy variable for base group}
- \item{FALSE}{(default) exclude a dummy variable for base group}
+ \item{TRUE}{: include a dummy variable for base group}
+ \item{FALSE}{(default) : exclude a dummy variable for base group}
 }}
 
-\item{col}{Columns vector (all columns are used if NULL is given)}
+\item{col}{Columns vector (all columns are used if \code{NULL} is given)}
 
-\item{numerical}{Columns vector converting from factor/ordered to numeric (ignore if column is numeric)}
+\item{numerical}{Columns vector converting from \code{factor/ordered} to \code{numeric} (ignore if column is \code{numeric})}
 
 \item{as.is}{Columns vector not converting}
 }
 \value{
-return as data.frame
+return as \code{data.frame}
 }
 \description{
 Create dummy variables from categorical data.
@@ -94,4 +94,3 @@ dat
 makedummies(dat, as.is = "x")
 makedummies(dat, as.is = c("x", "y"))
 }
-\keyword{function}
