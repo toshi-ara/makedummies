@@ -1,10 +1,10 @@
 Package: makedummies
 Type: Package
 Title: Create Dummy Variables from Categorical Data
-Version: 1.0
-Date: 2017-01-02
-Author: Toshiaki Ara
-Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
+Version: 1.1
+Date: 2018-04-06
+Authors@R: person("Toshiaki", "Ara", email = "toshiaki.ara@gmail.com",
+  role = c("aut", "cre"))
 Description: Create dummy variables from categorical data.
     This package can convert categorical data (factor and ordered) into
     dummy variables and handle multiple columns simultaneously.
@@ -14,3 +14,4 @@ Description: Create dummy variables from categorical data.
 License: GPL-2
 URL: https://github.com/toshi-ara/makedummies
 BugReports: https://github.com/toshi-ara/makedummies/issues/
+RoxygenNote: 6.0.1
