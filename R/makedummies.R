@@ -119,6 +119,7 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
                     res <- res[,-1]
                 }
                 res <- data.frame(res)
+                colnames(res) <- name
             }
         } else { ## non-factor and non-ordered => as-is
             res <- data.frame(tmp)
