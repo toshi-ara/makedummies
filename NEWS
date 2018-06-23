@@ -1,4 +1,11 @@
+Changes to version 1.1.1
+
+- Pull Request #1
+  "add column name when when columns has binary value"
+  (https://github.com/toshi-ara/makedummies/pull/1)
+  Thanks to Kohki YAMAGIWA for the contribution.
+
 Changes to version 1.1
 
-  makedummies() accepts a tbl class data.
-	fixed bug when "POSIXt" class is included.
+- makedummies() accepts a tbl class data.
+- fixed bug when "POSIXt" class is included.

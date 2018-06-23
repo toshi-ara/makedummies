@@ -32,6 +32,11 @@ This package enables to select whether a dummy variable for base group
 is included (for principal component analysis/factor analysis) or
 excluded (for regression analysis) by an option.
 }
+\note{
+\code{tbl} class is also accepted from version 1.1 (returned as \code{data.frame}).
+
+Pull Request #1 (add column name when when columns has binary value) (\url{https://github.com/toshi-ara/makedummies/pull/1}). Thanks to Kohki YAMAGIWA for the contribution.
+}
 \examples{
 ## factor
 dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
