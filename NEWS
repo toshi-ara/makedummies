@@ -1,3 +1,9 @@
+Changes to version 1.1.2
+
+- fix several bugs
+  - the column names are inappropriate.
+  - the columns are droped when they contain only one level.
+
 Changes to version 1.1.1
 
 - Pull Request #1

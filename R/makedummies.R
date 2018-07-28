@@ -116,11 +116,13 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
                 res[cbind(seq(m), tmp)] <- 1
                 colnames(res) <- paste(name, level, sep = "_")
                 ## basal_level option => delete basal level
-                if (basal_level == FALSE) {
-                    res <- res[,-1]
+                if (n > 1 && basal_level == FALSE) {
+                    res <- res[, -1, drop = FALSE]
                 }
                 res <- data.frame(res)
-                colnames(res) <- name
+                if (ncol(res) == 1) {
+                    colnames(res) <- name
+                }
             }
         } else { ## non-factor and non-ordered => as-is
             res <- data.frame(tmp)
