@@ -1,3 +1,10 @@
+Changes to version 1.2.0
+- add S3 methods
+  - `matrix` class data is automatically converted to `data.frame` class
+  - return tibble class when data is tibble
+- fix several bugs
+  - return rownames of input data
+
 Changes to version 1.1.2
 
 - fix several bugs
