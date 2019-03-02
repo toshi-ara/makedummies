@@ -101,6 +101,7 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
     for (i in seq_along(name_col)) {
         name <- name_col[i]
         tmp <- dat[,name]
+
         if (!is.factor(tmp) || (name %in% as.is)) {
             ## (non-factor and non-ordered) or as.is option
             res <- data.frame(tmp)
@@ -112,8 +113,9 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
             m <- length(tmp)
             n <- length(level)
             res <- matrix(0L, m, n)
-            res[cbind(seq(m), tmp)] <- 1L
+            res[cbind(seq.int(m), tmp)] <- 1L
             colnames(res) <- paste(name, level, sep = "_")
+
             ## basal_level option => delete basal level
             if (basal_level == FALSE && (n > 1)) {
                 res <- res[, -1, drop = FALSE]
