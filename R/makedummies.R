@@ -111,8 +111,8 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
             level <- levels(droplevels(tmp))
             m <- length(tmp)
             n <- length(level)
-            res <- matrix(0, m, n)
-            res[cbind(seq(m), tmp)] <- 1
+            res <- matrix(0L, m, n)
+            res[cbind(seq(m), tmp)] <- 1L
             colnames(res) <- paste(name, level, sep = "_")
             ## basal_level option => delete basal level
             if (basal_level == FALSE && (n > 1)) {
