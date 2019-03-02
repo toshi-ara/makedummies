@@ -7,10 +7,13 @@
 #' is included (for principal component analysis/factor analysis) or
 #' excluded (for regression analysis) by an option.
 #' \code{makedummies} function accepts
-#' \code{data.frame} class and
+#' \code{data.frame}, \code{matrix}, and
 #' \code{tbl} (tibble) class (by \code{tibble} package).
+#' \code{matrix} class data is automatically converted to
+#' \code{data.frame} class.
 #'
-#' @param dat data of \code{data.frame} or \code{tbl} class
+#' @param dat data of \code{data.frame}, \code{matrix},
+#' or \code{tbl} class
 #' @param \dots arguments to makedummies.data.frame (\code{tbl} class)
 #'
 #' @return return as \code{data.frame} or \code{tbl} class
@@ -154,6 +157,17 @@ makedummies.default <- function(dat, basal_level = FALSE,
 
     rownames(result) <- name_row
     return(result)
+}
+
+
+#' @rdname makedummies
+#' @method makedummies matrix
+#'
+#' @export
+#'
+makedummies.matrix <- function(dat, ...) {
+    dat <- data.frame(dat)
+    makedummies.default(dat, ...)
 }
 
 

@@ -3,6 +3,7 @@
 \name{makedummies}
 \alias{makedummies}
 \alias{makedummies.default}
+\alias{makedummies.matrix}
 \alias{makedummies.tbl}
 \title{Create Dummy Variables from Categorical Data}
 \usage{
@@ -11,10 +12,13 @@ makedummies(dat, ...)
 \method{makedummies}{default}(dat, basal_level = FALSE, col = NULL,
   numerical = NULL, as.is = NULL, ...)
 
+\method{makedummies}{matrix}(dat, ...)
+
 \method{makedummies}{tbl}(dat, ...)
 }
 \arguments{
-\item{dat}{data of \code{data.frame} or \code{tbl} class}
+\item{dat}{data of \code{data.frame}, \code{matrix},
+or \code{tbl} class}
 
 \item{\dots}{arguments to makedummies.data.frame (\code{tbl} class)}
 
@@ -41,8 +45,10 @@ This package enables to select whether a dummy variable for base group
 is included (for principal component analysis/factor analysis) or
 excluded (for regression analysis) by an option.
 \code{makedummies} function accepts
-\code{data.frame} class and
+\code{data.frame}, \code{matrix}, and
 \code{tbl} (tibble) class (by \code{tibble} package).
+\code{matrix} class data is automatically converted to
+\code{data.frame} class.
 }
 \note{
 Pull Request #1 (add column name when when columns has binary value) (\url{https://github.com/toshi-ara/makedummies/pull/1}). Thanks to Kohki YAMAGIWA for the contribution.
