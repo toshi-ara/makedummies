@@ -139,6 +139,7 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
         }
     }
 
+    rownames(result) <- name_row
     return(result)
 }
 
