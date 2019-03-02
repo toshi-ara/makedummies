@@ -6,24 +6,19 @@
 #' This package enables to select whether a dummy variable for base group
 #' is included (for principal component analysis/factor analysis) or
 #' excluded (for regression analysis) by an option.
-
-#' @param dat \code{data.frame}
-#' @param basal_level
-#'   \describe{
-#'    \item{TRUE}{: include a dummy variable for base group}
-#'    \item{FALSE}{(default) : exclude a dummy variable for base group}
-#'   }
-#' @param col Columns vector (all columns are used if \code{NULL} is given)
-#' @param numerical Columns vector converting from \code{factor/ordered} to \code{numeric} (ignore if column is \code{numeric})
-#' @param as.is Columns vector not converting
-#' @return return as \code{data.frame}
+#' \code{makedummies} function accepts
+#' \code{data.frame} class and
+#' \code{tbl} (tibble) class (by \code{tibble} package).
 #'
-#' @note \code{tbl} class is also accepted from version 1.1 (returned as \code{data.frame}).
+#' @param dat data of \code{data.frame} or \code{tbl} class
+#' @param \dots arguments to makedummies.data.frame (\code{tbl} class)
+#'
+#' @return return as \code{data.frame} or \code{tbl} class
+#'
 #' @note Pull Request #1 (add column name when when columns has binary value) (\url{https://github.com/toshi-ara/makedummies/pull/1}). Thanks to Kohki YAMAGIWA for the contribution.
 #'
-#' @export
-
 #' @examples
+#' #### 'data.frame' class
 #' ## factor
 #' dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
 #' dat$x
@@ -84,11 +79,29 @@
 #' dat
 #' makedummies(dat, as.is = "x")
 #' makedummies(dat, as.is = c("x", "y"))
+#'
+#' @export
+#'
+makedummies <- function(dat, ...) UseMethod("makedummies")
 
-makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, as.is = NULL) {
-    ## convert tbl data to data.frame
-    if (inherits(dat, "tbl")) dat <- data.frame(dat)
 
+#' @rdname makedummies
+#' @method makedummies default
+#'
+#' @param basal_level logical
+#'   \describe{
+#'    \item{TRUE}{: include a dummy variable for base group}
+#'    \item{FALSE}{(default) : exclude a dummy variable for base group}
+#'   }
+#' @param col Columns vector (all columns are used if \code{NULL} is given)
+#' @param numerical Columns vector converting from \code{factor/ordered} to \code{numeric} (ignore if column is \code{numeric})
+#' @param as.is Columns vector not converting
+#'
+#' @export
+#'
+makedummies.default <- function(dat, basal_level = FALSE,
+                                col = NULL, numerical = NULL,
+                                as.is = NULL, ...) {
     ## names of column and row
     if (is.null(col)) {
         name_col <- colnames(dat)
@@ -141,5 +154,25 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
 
     rownames(result) <- name_row
     return(result)
+}
+
+
+#' @rdname makedummies
+#' @method makedummies tbl
+#'
+#' @importFrom tibble as_tibble
+#'
+#' @examples
+#' #### 'tibble' class
+#' if (require(tibble)) {
+#'   dat <- as_tibble(iris)
+#'   makedummies(dat[46:55,], col = "Species", basal_level = TRUE)
+#' }
+#'
+#' @export
+#'
+makedummies.tbl <- function(dat, ...) {
+    dat <- data.frame(dat)
+    tibble::as_tibble(makedummies.default(dat, ...))
 }
 
