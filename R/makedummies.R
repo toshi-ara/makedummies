@@ -98,42 +98,45 @@ makedummies <- function(dat, basal_level = FALSE, col = NULL, numerical = NULL, 
     name_row <- rownames(dat)
 
     ## process each column
-    for (i in seq(length(name_col))) {
+    for (i in seq_along(name_col)) {
         name <- name_col[i]
         tmp <- dat[,name]
-        if (name %in% as.is) { ## as.is option
+        if (!is.factor(tmp) || (name %in% as.is)) {
+            ## (non-factor and non-ordered) or as.is option
             res <- data.frame(tmp)
             colnames(res) <- name
-        } else if (is.factor(tmp)) { ## factor or ordered
-            if (name %in% numerical) { ## numerical option => convert numeric
-                res <- as.matrix(as.numeric(tmp))
-                colnames(res) <- name
-            } else { ## convert dummy variables
-                level <- levels(droplevels(tmp))
-                m <- length(tmp)
-                n <- length(level)
-                res <- matrix(0, m, n)
-                res[cbind(seq(m), tmp)] <- 1
-                colnames(res) <- paste(name, level, sep = "_")
-                ## basal_level option => delete basal level
-                if (n > 1 && basal_level == FALSE) {
-                    res <- res[, -1, drop = FALSE]
-                }
-                res <- data.frame(res)
-                if (ncol(res) == 1) {
-                    colnames(res) <- name
-                }
+        } else if (!(name %in% numerical)) {
+            ## factor or ordered
+            ## convert dummy variables
+            level <- levels(droplevels(tmp))
+            m <- length(tmp)
+            n <- length(level)
+            res <- matrix(0, m, n)
+            res[cbind(seq(m), tmp)] <- 1
+            colnames(res) <- paste(name, level, sep = "_")
+            ## basal_level option => delete basal level
+            if (basal_level == FALSE && (n > 1)) {
+                res <- res[, -1, drop = FALSE]
             }
-        } else { ## non-factor and non-ordered => as-is
-            res <- data.frame(tmp)
+
+            res <- data.frame(res)
+            if (ncol(res) == 1) {
+                colnames(res) <- name
+            }
+        } else {
+            ## factor or ordered
+            ## numerical option => convert numeric
+            res <- as.matrix(as.numeric(tmp))
             colnames(res) <- name
         }
+
         if (i == 1) {
             result <- data.frame(res)
         } else {
             result <- data.frame(result, res)
         }
     }
+
     return(result)
 }
 
