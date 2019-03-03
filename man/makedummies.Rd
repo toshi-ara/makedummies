@@ -2,15 +2,28 @@
 % Please edit documentation in R/makedummies.R
 \name{makedummies}
 \alias{makedummies}
+\alias{makedummies.default}
+\alias{makedummies.matrix}
+\alias{makedummies.tbl}
 \title{Create Dummy Variables from Categorical Data}
 \usage{
-makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL,
-  as.is = NULL)
+makedummies(dat, ...)
+
+\method{makedummies}{default}(dat, basal_level = FALSE, col = NULL,
+  numerical = NULL, as.is = NULL, ...)
+
+\method{makedummies}{matrix}(dat, ...)
+
+\method{makedummies}{tbl}(dat, ...)
 }
 \arguments{
-\item{dat}{\code{data.frame}}
+\item{dat}{data of \code{data.frame}, \code{matrix},
+or \code{tbl} class}
 
-\item{basal_level}{\describe{
+\item{\dots}{arguments to makedummies.data.frame (\code{tbl} class)}
+
+\item{basal_level}{logical
+\describe{
  \item{TRUE}{: include a dummy variable for base group}
  \item{FALSE}{(default) : exclude a dummy variable for base group}
 }}
@@ -22,7 +35,7 @@ makedummies(dat, basal_level = FALSE, col = NULL, numerical = NULL,
 \item{as.is}{Columns vector not converting}
 }
 \value{
-return as \code{data.frame}
+return as \code{data.frame} or \code{tbl} class
 }
 \description{
 Create dummy variables from categorical data.
@@ -31,13 +44,17 @@ dummy variables and handle multiple columns simultaneously.
 This package enables to select whether a dummy variable for base group
 is included (for principal component analysis/factor analysis) or
 excluded (for regression analysis) by an option.
+\code{makedummies} function accepts
+\code{data.frame}, \code{matrix}, and
+\code{tbl} (tibble) class (by \code{tibble} package).
+\code{matrix} class data is automatically converted to
+\code{data.frame} class.
 }
 \note{
-\code{tbl} class is also accepted from version 1.1 (returned as \code{data.frame}).
-
 Pull Request #1 (add column name when when columns has binary value) (\url{https://github.com/toshi-ara/makedummies/pull/1}). Thanks to Kohki YAMAGIWA for the contribution.
 }
 \examples{
+#### 'data.frame' class
 ## factor
 dat <- data.frame(x = factor(rep(c("a", "b", "c"), each = 3)))
 dat$x
@@ -98,4 +115,11 @@ dat <- data.frame(
 dat
 makedummies(dat, as.is = "x")
 makedummies(dat, as.is = c("x", "y"))
+
+#### 'tibble' class
+if (require(tibble)) {
+  dat <- as_tibble(iris)
+  makedummies(dat[46:55,], col = "Species", basal_level = TRUE)
+}
+
 }

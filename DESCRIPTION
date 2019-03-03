@@ -1,8 +1,8 @@
 Package: makedummies
 Type: Package
 Title: Create Dummy Variables from Categorical Data
-Version: 1.1.2
-Date: 2018-07-28
+Version: 1.2.0
+Date: 2019-03-02
 Authors@R: person("Toshiaki", "Ara", email = "toshiaki.ara@gmail.com",
   role = c("aut", "cre"))
 Description: Create dummy variables from categorical data.
@@ -11,7 +11,11 @@ Description: Create dummy variables from categorical data.
     This package enables to select whether a dummy variable for base group
     is included (for principal component analysis/factor analysis) or
     excluded (for regression analysis) by an option.
+    'makedummies' function accepts 'data.frame', 'matrix', and
+    'tbl' (tibble) class (by 'tibble' package).
+    'matrix' class data is automatically converted to 'data.frame' class.
+Imports: tibble
 License: GPL-2
 URL: https://github.com/toshi-ara/makedummies
 BugReports: https://github.com/toshi-ara/makedummies/issues/
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
