@@ -185,8 +185,55 @@ makedummies.matrix <- function(dat, ...) {
 #'
 #' @export
 #'
-makedummies.tbl <- function(dat, ...) {
-    dat <- data.frame(dat)
-    tibble::as_tibble(makedummies.default(dat, ...))
-}
+makedummies.tbl <- function(dat, basal_level = FALSE,
+                            col = NULL, numerical = NULL,
+                            as.is = NULL, ...) {
+    ## names of column
+    if (is.null(col)) {
+        name_col <- colnames(dat)
+    } else {
+        name_col <- unique(col)
+    }
 
+    ## process each column
+    for (i in seq_along(name_col)) {
+        name <- name_col[i]
+        tmp <- dat[,name]
+
+        if (!is.factor(tmp[[1]]) || (name %in% as.is)) {
+            ## (non-factor and non-ordered) or as.is option
+            res <- tmp
+        } else if (!(name %in% numerical)) {
+            ## factor or ordered
+            ## convert dummy variables
+            tmp <- tmp[[1]]
+            level <- levels(droplevels(tmp))
+            m <- length(tmp)
+            n <- length(level)
+            res <- matrix(0L, m, n)
+            res[cbind(seq.int(m), tmp)] <- 1L
+            res_colname <- paste(name, level, sep = "_")
+            colnames(res) <- res_colname
+
+            ## basal_level option => delete basal level
+            if (basal_level == FALSE && (n > 1)) {
+                res <- res[, -1, drop = FALSE]
+            }
+            if (ncol(res) == 1) {
+                colnames(res) <- name
+            }
+        } else {
+            ## factor or ordered
+            ## numerical option => convert numeric
+            res <- data.matrix(tmp)
+        }
+
+        if (i == 1) {
+            result <- res
+        } else {
+            result <- cbind(result, res)
+        }
+    }
+
+    return(as_tibble(result))
+}

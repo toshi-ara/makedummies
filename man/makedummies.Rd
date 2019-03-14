@@ -14,7 +14,8 @@ makedummies(dat, ...)
 
 \method{makedummies}{matrix}(dat, ...)
 
-\method{makedummies}{tbl}(dat, ...)
+\method{makedummies}{tbl}(dat, basal_level = FALSE, col = NULL,
+  numerical = NULL, as.is = NULL, ...)
 }
 \arguments{
 \item{dat}{data of \code{data.frame}, \code{matrix},
