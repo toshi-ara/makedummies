@@ -106,11 +106,7 @@ makedummies.default <- function(dat, basal_level = FALSE,
                                 col = NULL, numerical = NULL,
                                 as.is = NULL, ...) {
     ## names of column and row
-    if (is.null(col)) {
-        name_col <- colnames(dat)
-    } else {
-        name_col <- unique(col)
-    }
+    name_col <- get_colnames(dat, col)
     name_row <- rownames(dat)
 
     ## process each column
@@ -125,22 +121,7 @@ makedummies.default <- function(dat, basal_level = FALSE,
         } else if (!(name %in% numerical)) {
             ## factor or ordered
             ## convert dummy variables
-            level <- levels(droplevels(tmp))
-            m <- length(tmp)
-            n <- length(level)
-            res <- matrix(0L, m, n)
-            res[cbind(seq.int(m), tmp)] <- 1L
-            colnames(res) <- paste(name, level, sep = "_")
-
-            ## basal_level option => delete basal level
-            if (basal_level == FALSE && (n > 1)) {
-                res <- res[, -1, drop = FALSE]
-            }
-
-            res <- data.frame(res)
-            if (ncol(res) == 1) {
-                colnames(res) <- name
-            }
+            res <- dummy_matrix(tmp, name, basal_level, tbl = FALSE)
         } else {
             ## factor or ordered
             ## numerical option => convert numeric
@@ -189,11 +170,7 @@ makedummies.tbl <- function(dat, basal_level = FALSE,
                             col = NULL, numerical = NULL,
                             as.is = NULL, ...) {
     ## names of column
-    if (is.null(col)) {
-        name_col <- colnames(dat)
-    } else {
-        name_col <- unique(col)
-    }
+    name_col <- get_colnames(dat, col)
 
     ## process each column
     for (i in seq_along(name_col)) {
@@ -206,22 +183,7 @@ makedummies.tbl <- function(dat, basal_level = FALSE,
         } else if (!(name %in% numerical)) {
             ## factor or ordered
             ## convert dummy variables
-            tmp <- tmp[[1]]
-            level <- levels(droplevels(tmp))
-            m <- length(tmp)
-            n <- length(level)
-            res <- matrix(0L, m, n)
-            res[cbind(seq.int(m), tmp)] <- 1L
-            res_colname <- paste(name, level, sep = "_")
-            colnames(res) <- res_colname
-
-            ## basal_level option => delete basal level
-            if (basal_level == FALSE && (n > 1)) {
-                res <- res[, -1, drop = FALSE]
-            }
-            if (ncol(res) == 1) {
-                colnames(res) <- name
-            }
+            res <- dummy_matrix(tmp, name, basal_level, tbl = TRUE)
         } else {
             ## factor or ordered
             ## numerical option => convert numeric
@@ -237,3 +199,44 @@ makedummies.tbl <- function(dat, basal_level = FALSE,
 
     return(as_tibble(result))
 }
+
+
+get_colnames <- function(dat, col) {
+    if (is.null(col)) {
+        name_col <- colnames(dat)
+    } else {
+        name_col <- unique(col)
+    }
+    return(name_col)
+}
+
+
+dummy_matrix <- function(dat, name, basal_level, tbl = FALSE) {
+    if (tbl) {
+        dat <- dat[[1]]
+    }
+
+    level <- levels(droplevels(dat))
+    m <- length(dat)
+    n <- length(level)
+    res <- matrix(0L, m, n)
+    res[cbind(seq.int(m), dat)] <- 1L
+    colnames(res) <- paste(name, level, sep = "_")
+
+    ## basal_level option => delete basal level
+    if (basal_level == FALSE && (n > 1)) {
+        res <- res[, -1, drop = FALSE]
+    }
+
+    if (tbl) {
+        res <- as_tibble(res)
+    } else {
+        res <- data.frame(res)
+    }
+
+    if (ncol(res) == 1) {
+        colnames(res) <- name
+    }
+    return(res)
+}
+
