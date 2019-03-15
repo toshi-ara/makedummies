@@ -14,7 +14,8 @@ makedummies(dat, ...)
 
 \method{makedummies}{matrix}(dat, ...)
 
-\method{makedummies}{tbl}(dat, ...)
+\method{makedummies}{tbl}(dat, basal_level = FALSE, col = NULL,
+  numerical = NULL, as.is = NULL, ...)
 }
 \arguments{
 \item{dat}{data of \code{data.frame}, \code{matrix},
@@ -120,6 +121,18 @@ makedummies(dat, as.is = c("x", "y"))
 if (require(tibble)) {
   dat <- as_tibble(iris)
   makedummies(dat[46:55,], col = "Species", basal_level = TRUE)
+
+  # non-standard variable name
+  dat2 <- tibble(
+      `1` = factor(rep(c("c", "a", "b"), each = 3)),
+      `@` = factor(rep(1:3, each = 3)),
+      `&` = rep(4:6, each = 3)
+  )
+  dat2
+
+  makedummies(dat2, basal_level = TRUE)
+  makedummies(dat2, as.is = "@", basal_level = TRUE)
+  makedummies(dat2, numerical = "1", basal_level = TRUE)
 }
 
 }

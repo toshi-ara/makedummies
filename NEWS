@@ -1,3 +1,7 @@
+Changes to version 1.2.0.9000
+- fix bug
+  - column names are broken using non-standard name in tibble
+
 Changes to version 1.2.0
 - add S3 methods
   - `matrix` class data is automatically converted to `data.frame` class
