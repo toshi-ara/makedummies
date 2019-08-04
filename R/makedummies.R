@@ -46,9 +46,18 @@
 #'
 #' ## factors
 #' dat <- data.frame(
-#' x = factor(rep(c("a", "b", "c"), each = 3)),
-#' y = factor(rep(1:3, each = 3))
+#'     x = factor(rep(c("a", "b", "c"), each = 3)),
+#'     y = factor(rep(1:3, each = 3))
 #' )
+#' makedummies(dat)
+#'
+#' ## data including NA
+#'
+#' dat <- data.frame(
+#'     x = factor(rep(c("a", "b", "c"), each = 3)),
+#'     y = rep(1:3, each = 3)
+#' )
+#' dat$x[4] <- NA; dat$y[6] <- NA
 #' makedummies(dat)
 #'
 #' ## "col" option
@@ -171,6 +180,9 @@ dummy_matrix <- function(dat, basal_level) {
     res <- matrix(0L, m, n)
     res[cbind(seq.int(m), dat)] <- 1L
     colnames(res) <- paste(name, level, sep = "_")
+
+    ## setting NA
+    res[is.na(dat),] <- NA
 
     ## basal_level option => delete basal level
     if (basal_level == FALSE && (n > 1)) {
