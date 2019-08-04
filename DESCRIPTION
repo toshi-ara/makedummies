@@ -1,7 +1,7 @@
 Package: makedummies
 Type: Package
 Title: Create Dummy Variables from Categorical Data
-Version: 1.2.0.9000
+Version: 1.2.1
 Date: 2019-08-04
 Authors@R: person("Toshiaki", "Ara", email = "toshiaki.ara@gmail.com",
   role = c("aut", "cre"))
