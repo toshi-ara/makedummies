@@ -103,11 +103,19 @@ makedummies <- function(dat, ...) UseMethod("makedummies")
 #' @param basal_level logical
 #'   \describe{
 #'    \item{TRUE}{: include a dummy variable for base group}
-#'    \item{FALSE}{(default) : exclude a dummy variable for base group}
+#'    \item{FALSE}{(default) : exclude the first dummy variable for base group}
+#'    \item{string}{: exclude a selected dummy variable for base group}
 #'   }
 #' @param col Columns vector (all columns are used if \code{NULL} is given)
 #' @param numerical Columns vector converting from \code{factor/ordered} to \code{numeric} (ignore if column is \code{numeric})
 #' @param as.is Columns vector not converting
+#'
+#' @examples
+#' mini_iris <- iris[c(1, 51, 101), 'Species', drop=FALSE]
+#' 
+#' makedummies(mini_iris, basal_level = FALSE) # default
+#' makedummies(mini_iris, basal_level = TRUE)
+#' makedummies(mini_iris, basal_level = "versicolor")
 #'
 #' @export
 #'
@@ -185,8 +193,12 @@ dummy_matrix <- function(dat, basal_level) {
     res[is.na(dat),] <- NA
 
     ## basal_level option => delete basal level
-    if (basal_level == FALSE && (n > 1)) {
-        res <- res[, -1, drop = FALSE]
+    if (n <= 1L) {
+        NULL # Ensure n > 1 to run subsequent conditions
+    } else if (identical(basal_level, FALSE)) {
+        res <- res[, -1L, drop = FALSE]
+    } else if (is.character(basal_level)) {
+        res <- res[, level != match.arg(basal_level, level), drop = FALSE]
     }
 
     if (ncol(res) == 1) {

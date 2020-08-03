@@ -9,13 +9,25 @@
 \usage{
 makedummies(dat, ...)
 
-\method{makedummies}{default}(dat, basal_level = FALSE, col = NULL,
-  numerical = NULL, as.is = NULL, ...)
+\method{makedummies}{default}(
+  dat,
+  basal_level = FALSE,
+  col = NULL,
+  numerical = NULL,
+  as.is = NULL,
+  ...
+)
 
 \method{makedummies}{matrix}(dat, ...)
 
-\method{makedummies}{tbl}(dat, basal_level = FALSE, col = NULL,
-  numerical = NULL, as.is = NULL, ...)
+\method{makedummies}{tbl}(
+  dat,
+  basal_level = FALSE,
+  col = NULL,
+  numerical = NULL,
+  as.is = NULL,
+  ...
+)
 }
 \arguments{
 \item{dat}{data of \code{data.frame}, \code{matrix},
@@ -26,7 +38,8 @@ or \code{tbl} class}
 \item{basal_level}{logical
 \describe{
  \item{TRUE}{: include a dummy variable for base group}
- \item{FALSE}{(default) : exclude a dummy variable for base group}
+ \item{FALSE}{(default) : exclude the first dummy variable for base group}
+ \item{string}{: exclude a selected dummy variable for base group}
 }}
 
 \item{col}{Columns vector (all columns are used if \code{NULL} is given)}
@@ -125,6 +138,12 @@ dat <- data.frame(
 dat
 makedummies(dat, as.is = "x")
 makedummies(dat, as.is = c("x", "y"))
+
+mini_iris <- iris[c(1, 51, 101), 'Species', drop=FALSE]
+
+makedummies(mini_iris, basal_level = FALSE) # default
+makedummies(mini_iris, basal_level = TRUE)
+makedummies(mini_iris, basal_level = "versicolor")
 
 #### 'tibble' class
 if (require(tibble)) {
